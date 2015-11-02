@@ -131,3 +131,11 @@
     mode: 0644
   when: "'--enable-fpm' in php_source_configure_command"
   notify: restart php-fpm
+
+- name: Ensure php-fpm pool is installed.
+  template:
+    src: fpm-pool.conf.j2
+    dest: "{{ php_conf_path }}/pool.d/www.conf"
+    mode: 0644
+  when: "'--enable-fpm' in php_source_configure_command"
+  notify: restart php-fpm

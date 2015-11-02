@@ -40,6 +40,14 @@
   when: php_opcache_enable
   notify: restart webserver
 
+- name: Ensure php-fpm pool is installed.
+  template:
+    src: fpm-pool.conf.j2
+    dest: "{{ php_conf_path }}/pool.d/www.conf"
+    mode: 0644
+  when: php_enable_php_fpm
+  notify: restart php-fpm
+
 - name: Ensure php-fpm is started and enabled at boot (if configured).
   service:
     name: "{{ php_fpm_daemon }}"
